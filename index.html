@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electromagnetism (High School) — Interactive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Electromagnetism</h1>
+                <p class="author">Halliday / Serway / 人教版</p>
+                <div id="progress-container">
+                    <div id="progress-bar"><div id="progress-fill"></div></div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Search topics...">
+            </div>
+            <nav id="chapter-nav"></nav>
+            <div id="sidebar-footer"><p class="copyright-notice" style="font-size:0.7rem;color:#888;margin-top:12px;text-align:center;">&copy; 2026 Hengzhe Zhao · AGPL-3.0 &amp; Commercial</p>
+                <button id="reset-progress">Reset Progress</button>
+            </div>
+        </aside>
+        <main id="main-content">
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <h1>Electromagnetism</h1>
+                    <h2>Charges, Fields, Circuits, Magnetism &amp; Induction</h2>
+                    <p class="welcome-description">
+                        See invisible forces come alive. Drag charges, build circuits,
+                        watch electromagnetic waves propagate — Maxwell's equations in action.
+                    </p>
+                </div>
+                <div class="roadmap">
+                    <h3>What You'll Explore</h3>
+                    <div class="roadmap-parts">
+                        <div class="roadmap-part">
+                            <h4>Part A: Electrostatics</h4>
+                            <ul>
+                                <li>Ch 0: Charges &amp; Coulomb's Law</li>
+                                <li>Ch 1: Electric Fields</li>
+                                <li>Ch 2: Field Lines &amp; Gauss's Law</li>
+                                <li>Ch 3: Electric Potential</li>
+                                <li>Ch 4: Capacitors &amp; Dielectrics</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part B: DC Circuits</h4>
+                            <ul>
+                                <li>Ch 5: Current, Resistance &amp; Ohm's Law</li>
+                                <li>Ch 6: Series &amp; Parallel Circuits</li>
+                                <li>Ch 7: Kirchhoff's Laws</li>
+                                <li>Ch 8: Power &amp; Joule Heating</li>
+                                <li>Ch 9: RC Circuits</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part C: Magnetism</h4>
+                            <ul>
+                                <li>Ch 10: Magnetic Fields &amp; Field Lines</li>
+                                <li>Ch 11: Magnetic Field of Currents</li>
+                                <li>Ch 12: Force on Current-Carrying Wires</li>
+                                <li>Ch 13: Lorentz Force &amp; Charged Particles</li>
+                                <li>Ch 14: The Hall Effect</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part D: Electromagnetic Induction</h4>
+                            <ul>
+                                <li>Ch 15: Faraday's Law</li>
+                                <li>Ch 16: Lenz's Law</li>
+                                <li>Ch 17: Inductance</li>
+                                <li>Ch 18: Alternating Current</li>
+                                <li>Ch 19: Maxwell &amp; EM Waves</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="welcome-start">Select a chapter from the sidebar to explore the electromagnetic universe!</p>
+            </div>
+            <div id="chapter-content" style="display:none;">
+                <div id="chapter-header">
+                    <div id="chapter-number-badge"></div>
+                    <h1 id="chapter-title"></h1>
+                    <p id="chapter-subtitle"></p>
+                </div>
+                <div id="section-tabs"></div>
+                <div id="section-content"></div>
+                <div id="exercises-panel" style="display:none;">
+                    <h3>Exercises</h3>
+                    <div id="exercises-list"></div>
+                </div>
+                <div id="chapter-nav-buttons">
+                    <button id="prev-btn">&larr; Previous</button>
+                    <span id="section-indicator"></span>
+                    <button id="next-btn">Next &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script>
+    window.CHAPTER_MANIFEST = [
+        {number:0,  id:'ch00', title:'Charges & Coulomb\'s Law',             file:'ch00-coulomb'},
+        {number:1,  id:'ch01', title:'Electric Fields',                      file:'ch01-electric-field'},
+        {number:2,  id:'ch02', title:'Field Lines & Gauss\'s Law',          file:'ch02-gauss'},
+        {number:3,  id:'ch03', title:'Electric Potential',                   file:'ch03-potential'},
+        {number:4,  id:'ch04', title:'Capacitors & Dielectrics',            file:'ch04-capacitors'},
+        {number:5,  id:'ch05', title:'Current, Resistance & Ohm\'s Law',    file:'ch05-ohm'},
+        {number:6,  id:'ch06', title:'Series & Parallel Circuits',          file:'ch06-circuits'},
+        {number:7,  id:'ch07', title:'Kirchhoff\'s Laws',                   file:'ch07-kirchhoff'},
+        {number:8,  id:'ch08', title:'Power & Joule Heating',               file:'ch08-power'},
+        {number:9,  id:'ch09', title:'RC Circuits',                         file:'ch09-rc'},
+        {number:10, id:'ch10', title:'Magnetic Fields & Field Lines',        file:'ch10-magnetic-field'},
+        {number:11, id:'ch11', title:'Magnetic Field of Currents',           file:'ch11-biot-savart'},
+        {number:12, id:'ch12', title:'Force on Current-Carrying Wires',      file:'ch12-ampere-force'},
+        {number:13, id:'ch13', title:'Lorentz Force & Charged Particles',    file:'ch13-lorentz'},
+        {number:14, id:'ch14', title:'The Hall Effect',                      file:'ch14-hall'},
+        {number:15, id:'ch15', title:'Faraday\'s Law',                      file:'ch15-faraday'},
+        {number:16, id:'ch16', title:'Lenz\'s Law',                         file:'ch16-lenz'},
+        {number:17, id:'ch17', title:'Inductance',                          file:'ch17-inductance'},
+        {number:18, id:'ch18', title:'Alternating Current',                  file:'ch18-ac'},
+        {number:19, id:'ch19', title:'Maxwell & EM Waves',                   file:'ch19-maxwell'}
+    ];
+    </script>
+    <script src="viz-engine.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
